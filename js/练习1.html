@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <style>
+        
+       
+    </style>
+    <script type="text/javascript">
+
+        //this:指向的是调用当前函数（方法）的对象
+        alert(this);   //输出的是window
+
+        function f1(){
+            alert(this)
+        };
+        f1();//此时是window在调用该函数，所以输出的this指向的是window
+
+        var obt=document.getElementById('');
+        obt.onclick=f1;//this指向div元素
+        obt.onclick=function(){
+            alert(this);//这个this指向的document元素
+            f1();//此时f1中的this指向的window
+
+        }
+        
+        $(function(){
+            alert(this);        
+        })     //输出的是document
+
+        //this的应用
+        
+
+
+        
+    </script>
+</head>
+<body>
+   <div>关于this</div>
+
+
+</body>
+</html>
