@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>笔记</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+	通过http://caniuse.com/可以查看各浏览器对HTML5的支持程度
+
+	<!-- 全局属性：所有标签都能使用的属性 -->
+	data-**="xx"  也就是自定义属性，但是规范了写法，加上data-前缀的就表示是自定义的
+	hidden  隐藏标签
+	spellcheck="true"  对标签内的文本内容进行语法纠错，可能错误的单词会加上下滑波浪线
+	tabindex="1"  按table键的切换顺序
+	contenteditable="true"  这个标签内的内容可编辑
+	window.document.desginMode="on";  JS中加上这段代码后，页面中所有内容都变成可编辑状态
+
+	<!-- IE标签兼容 -->
+	<script>
+	// 使用javascript创建一下用到的HTML5标签，这样在低版本IE中就能使用这个标签了；但是创建的标签是inline属性的，所以需要在CSS中将这些标签设置为block属性
+	document.createElement('header');
+	document.createElement('article');
+	document.createElement('aside');
+	document.createElement('section');
+	document.createElement('footer');
+	</script>
+	<style>
+	/*将所有用到的HTML5标签设置为block*/
+	header,article,aside,section,footer{display:block};
+	</style>
+	注：可以使用html5shiv.js这个插件来实现兼容（只针对布局类标签，功能类的无效）。
+
+	<!-- 新增有用标签 -->
+	<!-- 布局划分标签 -->
+	<header>  <!-- 定义头部/页眉 -->
+		<h1>Welcome to my homepage</h1>
+		<p>My name is Donald Duck</p>
+	</header>
+
+	<footer>...</footer> <!-- 定义尾部/页脚 -->
+
+	<nav>  <!-- 定义导航 -->
+		<a href="index.asp">Home</a>
+		<a href="html5_meter.asp">Previous</a>
+		<a href="html5_noscript.asp">Next</a>
+	</nav>
+
+	<section id="activity">...</section> <!-- 定义一块内容，划分网页，没有布局的作用。可以加上id方便JS操作 -->
+
+	<article>...</article>  <!-- 定义文章、帖子、回帖等 -->
+
+	<aside>...</aside>  <!-- 定义 article 以外的内容。aside 的内容应该与 article 的内容相关。如帖子左边的发帖人信息、侧边栏、友情链接等 -->
+
+	<!-- 语义化标签 -->
+	<time>...</time>  <!-- 时间标签 -->
+
+	<address>...</address>  <!-- 地址标签 -->
+
+	<!-- 功能标签 -->
+	<embed src="helloworld.swf" width="500" height="300" />  <!-- 定义嵌入的内容 -->
+
+	<p>Do not forget to buy <mark>milk</mark> today.</p>  <!-- mark:里面的内容会添加背景色进行标注 -->
+
+	<meter value="3" min="0" max="10">十分之三</meter>  <!-- 显示一个进度条，value是当前进度位置 -->
+
+	<progress value="22" max="100"></progress>   <!-- 也是进度条，FF目前无效 -->
+
+	<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">  <!-- oninput将指定id的元素内容进行计算，供output标签输出 -->
+		0<input type="range" id="a" value="50">100
+		+<input type="number" id="b" value="50">
+		=<output name="x" for="a b"></output>  <!-- 是一个输出域。for标签指定相关的元素 -->
+	</form>
+
+	<p contenteditable="true">这是一段可编辑的段落。请试着编辑该文本。</p>  <!-- 用户可以编辑里面的内容 -->
+
+	<p hidden="hidden">这个段落应该被隐藏。</p>  <!-- 隐藏元素 -->
+
+	<li data-animal-type="bird">Owl</li>  <!-- data-*属性用来嵌入自定义数据。属性名不应该有大写字母；可通过oLi.dataset.animalType来获取 -->
+	注：写在HTML中的自定义属性不能通过oLi.dataAnimalType直接获取，只有通过JS添加的自定义属性才能直接这样获取。之前是通过getAttribute()来获取HTML中的自定义属性，IE67下有兼容问题
+
+
+
+    <!-- 视频标签 -->
+    <video src="movie.ogg" controls='controls' style='width:300px;height:200px;'>你的浏览器不支持</video>
+    <video width="320" height="240" controls="controls" loop="loop" autoplay="autoplay">
+      <source src="/i/movie.ogg" type="video/ogg"> <!-- 不同浏览器兼容的视频格式不同，chrome/FF用ogg，safari/ie用mp4 -->
+      <source src="/i/movie.mp4" type="video/mp4"> <!-- 随着浏览器的更新，可能会都支持，需要测试 -->
+      你的浏览器不支持
+    </video>
+	<!-- 使用JS控制视频 -->
+	<div style="text-align:center;">
+	  <video id="video1" width="420" style="margin-top:15px;">
+		<source src="/example/html5/mov_bbb.mp4" type="video/mp4" />
+		<source src="/example/html5/mov_bbb.ogg" type="video/ogg" />
+		Your browser does not support HTML5 video.
+	  </video>
+	  <br /> 
+	  <button onclick="playPause()">播放/暂停</button> <!-- 添加按钮控件来控制视频的播放 -->
+	</div> 
+	<script type="text/javascript">
+		var myVideo=document.getElementById("video1");
+		function playPause(){ 
+			if (myVideo.paused) 
+			  myVideo.play(); 
+			else 
+			  myVideo.pause(); 
+		} 
+	</script> 
+
+
+
+	<!-- 音频标签 -->
+	<audio src="song.mp3" controls="controls">你的浏览器不支持</audio> <!-- 属性和使用JS控制的方式和video类似 -->
+	<!-- 创建一个audio标签并添加到body中 -->
+	<script>
+		function myFunction(){
+			var x = document.createElement("AUDIO");
+			x.setAttribute("src", "/i/horse.mp3");
+			x.setAttribute("controls", "controls");
+			document.body.appendChild(x);
+		}
+	</script>
+
+
+
+	<!-- Input类型：会自动验证格式 -->
+	<input type="email" name="" />
+
+	<input type="url" name="" />
+
+	<input type="number" name="" />
+	<input type="number" name="points" min="0" max="10" step="3" value="6" />  <!-- number类型有更多参数可以配置 -->
+
+	<input type="range" name="points" min="1" max="10" />  <!-- 一根整数拖动条，从最小值和最大值之间取一个值 -->
+
+	<input type="date" name="user_date" />  <!-- 会弹出一个日期选择控件，目前测试FF不支持 -->
+	<input type="month" name="user_date" />  <!-- 也可以设置为month,week,time等 -->
+
+	<input type="url" list="url_list" name="link" />  <!-- 使用list和datalist结合，输入框中可以出现一个下拉列表选择。目前FF不支持 -->
+	<datalist id="url_list">
+		<option label="W3Schools" value="http://www.w3school.com.cn" />
+		<option label="Google" value="http://www.google.com" />
+		<option label="Microsoft" value="http://www.microsoft.com" />
+	</datalist>
+
+
+
+	<!-- 常用表单属性 -->
+	<input type="text" name="user_name"  autofocus="autofocus" />  <!-- autofocus:在页面加载时会自动获得焦点，所有input标签有效 -->
+
+	<form action="demo_form.asp" method="get" id="user_form">  <!-- 为form表单指定了一个id属性 -->
+		First name:<input type="text" name="fname" />
+		<input type="submit" />
+	</form>
+	Last name: <input type="text" name="lname" form="user_form" />  <!-- 通过form属性指定input元素属于哪个form，值为form的id。好处是不比将元素写在form中，更便于布局 -->
+
+	<input type="submit" formaction="demo_admin.asp" value="Submit as admin" />   <!-- 通过formaction属性重新指定form的action地址。只对submit和image有效。这些属性对于创建不同的提交按钮(将数据提交给不同的服务端)很有帮助 -->
+
+	<input type="image" src="img_submit.gif" width="99" height="99" />  <!-- image类型的input，按钮功能，可以设置width和height属性 -->
+
+	<input type="file" name="img" multiple="multiple" />  <!-- multiple属性规定可以选择多个值（上传多个文件） -->
+
+	<input type="text" name="country_code" pattern="[A-z]{3}" title="Three letter country code" />  <!-- pattern自定义正则表达式来过滤内容，title是匹配失败提示的内容 -->
+
+	<input type="search" name="user_search"  placeholder="Search W3School" />  <!-- placeholder:定义提示信息，灰色字体以背景样式显示在输入框中 -->
+
+	<input type="text" name="usr_name" required="required" />  <!-- required属性检测值不能为空，否则无法提交 -->
+
+
+
+	<!-- 拖放 -->
+	<img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69" /> <!-- 为了使元素能够拖动，需要将draggable='true'; ondragstart设置元素拖动时发生的事件 -->
+	<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div> <!-- 当拖动的数据放置在了具有ondragover的元素上时，会执行这个元素上的ondrop事件 -->
+	<script type="text/javascript">
+		//设置被拖动元素的数据类型和值，即key和value
+		function drag(ev){
+			ev.dataTransfer.setData("myData",ev.target.id);  //dataTransfer.setData()方法设置被拖数据的数据类型和值：在这个例子中数据类型是"myData"，值是可拖动元素的id("drag1")
+		}
+		//屏蔽ondragover的默认事件
+		function allowDrop(ev){
+			ev.preventDefault();  //默认地，无法将数据/元素放置到其他元素中。如果需要设置允许放置，我们必须阻止对元素的默认处理方式
+		}
+		//拖放事件执行的内容
+		function drop(ev){
+			ev.preventDefault();  //调用 preventDefault() 来避免浏览器对数据的默认处理（drop事件的默认行为是以链接形式打开）
+			var data=ev.dataTransfer.getData("myData");  //通过dataTransfer.getData("myData") 方法获得被拖的数据。该方法将返回在setData()方法中设置为相同类型的任何数据
+			ev.target.appendChild(document.getElementById(data));  //被拖数据是被拖元素的id("drag1")，把被拖元素追加到放置元素（目标元素）中
+		}
+	</script>
+
+
+
+	<!-- canvas -->
+	详情查看canvas笔记
+	
+
+
+	<!-- 内联SVG -->
+	<!-- 使用XML格式绘制的图像。SVG 基于 XML，这意味着 SVG DOM 中的每个元素都是可用的。您可以为某个元素附加 JavaScript 事件处理器 -->
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+	  <polygon points="100,10 40,180 190,60 10,60 160,180" style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
+	</svg>
+	<!-- 实例 -->
+	<svg style="background-color:#55317b;fill:white;padding:3px;width:24px;height:24px;" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18.645px" height="15.574px" viewBox="0 0 18.645 15.574" enable-background="new 0 0 18.645 15.574" xml:space="preserve">
+		<path d="M17.469,6.841H15.38l-4.562-4.563c0.007-0.065,0.02-0.13,0.02-0.196c0-0.853-0.693-1.545-1.547-1.545
+c-0.853,0-1.545,0.692-1.545,1.545c0,0.088,0.012,0.17,0.024,0.253L3.265,6.841H1.176c-0.294,0-0.533,0.238-0.533,0.533v0.735
+c0,0.294,0.239,0.533,0.533,0.533h0.409l1.131,5.94c0,0.252,0.204,0.455,0.455,0.455h12.301c0.252,0,0.456-0.204,0.456-0.455
+l1.131-5.94h0.408c0.295,0,0.534-0.238,0.534-0.533V7.375C18.004,7.078,17.765,6.841,17.469,6.841z M8.623,3.469
+C8.827,3.567,9.05,3.626,9.29,3.626c0.258,0,0.496-0.069,0.709-0.18l3.394,3.395H5.252C5.252,6.841,8.623,3.469,8.623,3.469z
+M5.129,14.092H4.846c-0.306,0-0.596-0.178-0.645-0.401l-0.821-3.67C3.312,9.723,3.552,9.476,3.916,9.476h0.335
+c0.364,0,0.7,0.247,0.751,0.545l0.614,3.67C5.655,13.913,5.436,14.092,5.129,14.092z M8.069,14.092H7.786
+c-0.306,0-0.574-0.178-0.598-0.401l-0.387-3.67C6.77,9.723,7.039,9.476,7.402,9.476h0.335c0.365,0,0.673,0.247,0.686,0.545
+l0.18,3.67C8.617,13.913,8.376,14.092,8.069,14.092z M11.594,13.691c-0.016,0.223-0.277,0.401-0.585,0.401h-0.283
+c-0.306,0-0.554-0.178-0.55-0.401l0.047-3.67c0.004-0.298,0.303-0.545,0.668-0.545h0.334c0.366,0,0.643,0.247,0.622,0.545
+L11.594,13.691z M14.582,13.691c-0.043,0.223-0.326,0.401-0.633,0.401h-0.283c-0.306,0-0.532-0.178-0.503-0.401l0.483-3.67
+c0.039-0.298,0.368-0.545,0.732-0.545h0.334c0.366,0,0.614,0.247,0.559,0.545C15.271,10.021,14.582,13.691,14.582,13.691z" />
+	</svg>
+
+
+
+	<!-- Web存储 -->
+	<script type="text/javascript">
+		localStorage.lastname="Smith";  //使用localStorage对象来存储数据，长时间（永久）有效。与cookie的区别：cookie在访问服务器的时候时钟会携带（即使不需要），造成数据浪费，而localStorage不会；而且cookie限制4k，而localStorage和sessionStorage可以达到5M以上；没有cookie的过期时间限制，除非用户通过某些专业手段删除，否则永久有效
+		document.write(localStorage.lastname);
+	</script>
+	<script type="text/javascript">
+		sessionStorage.lastname="Smith";  //使用sessionStorage对象来存储数据，浏览器窗口(标签)关闭后失效，即使统一网站的不同窗口也不会共享sessionStorage。也是保存在本地
+		document.write(sessionStorage.lastname);
+	</script>
+
+
+
+	<!-- 新增JS API -->
+	<script>
+	// 新增选择器
+	document.querySelector('#div1');  //获取ID为div1的元素，同getElementById('div1')
+	document.querySelector('.box');  //通过class获取元素
+	document.querySelector('div');  //通过标签获取元素
+	document.querySelector('[title=hello]');  //通过属性（title="hello"）获取元素
+	注：querySelector()只能获取一个元素，如通过class来获取，只能获取所有class中的第一个；获取一组元素通过querySelectorAll()
+	document.querySelectorAll('.box');  //获取一组元素
+	document.getElementsByClassName('box');  //只针对class获取
+
+	// 操作class
+	var oDiv=document.getElementById('div1');
+	var aList=oDiv.classList;  //获取元素的class列表，返回这个元素拥有的所有class的一个数组对象集合
+	oDiv.classList.add('box');  //给这个元素添加新的class
+	oDiv.classList.remove('box');  //删除这个元素指定的class
+	oDiv.classList.toggle('box');  //如果这个元素中的class中有box，则删除；没有，则添加
+
+	// JSON的解析
+	var str='{"name":"Tirion","age":20}';  //格式必须为严格的JSON形式，引号要正确使用
+	var json=JSON.parse(str);  //将字符串解析为JSON（类似eval），字符串里不是JSON格式，则报错
+	var str2=JSON.stringify(json);  //将JSON转换为字符串
+	var json2=JSON.parse(str2);  //通过将一个JSON转换为字符串，再将字符串转换为JSON，就能实现JSON的拷贝；当修改json2的数据时不会影响到json1
+	注：IE67可使用json2.js这个插件来实现兼容
+
+	// 历史管理：当URL中的hash值发生变化时会触发浏览器的历史管理
+	详情查看知识点笔记中的历史管理相关内容
+	</script>
+</body>
+</html>
