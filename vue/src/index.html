@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>应用内测平台</title>
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+    <% } %>
+  </head>
+  <body>
+  <script>
+      window.config = {
+          currentUser: {name: "flyingzl", role:3},
+          context: "/api"
+      }
+  </script>
+
+  <div id="root"></div>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+    <% } %>
+  </body>
+</html>
