@@ -1,0 +1,312 @@
+{
+    "Demo": [
+
+        {
+            "url": "/user/login",
+            "desc": "登入",
+            "mock": true,
+            "delay":3000,
+            "res":{
+                "code":200,
+                "msg":"invalid password",
+                "data":{
+                    "role":2,
+                    "name":"larry"
+                }
+            }
+
+        },
+        {
+            "url": "/admin/app/list",
+            "desc": "获取产品列表",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "Get address successfully.",
+                "data": {
+                    "pageSize": 10,
+                    "pageNo": 2,
+                    "totalCount": 92,
+                    "items|1-5": [
+                        {
+                            "appId|+1": 1,
+                            "typeId": 1,
+                            "subTypeId":"@pick(11,12)",
+                            "appName": "@cword(5,10)",
+                            "typeName": "@pick('新闻阅读','视频','美食')",
+                            "versionName": "1.2.1",
+                            "versionCode": "1.0",
+                            "createdTime": "@date('yyyy-MM-dd')",
+                            "size":102400,
+                            "icon": "http://lianaibiji.qiniudn.com/image_icon.png",
+                            "downloadUrl":"http://lianaibiji.qiniudn.com/image_icon.apk",
+                            "imageList|1-4":[{"w":10, "h":10, "src":"http://image.coolapk.com/apk_image/2014/0830/12202_1409370078_2446.jpeg"}]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "url": "/admin/app/type",
+            "desc": "获取一级产品分类",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "Get address successfully.",
+                "data": [{"id":1, "name":"视频"},{"id":2, "name":"新闻"},{"id":3, "name":"笑话"}]
+            }
+        },
+
+        {
+            "url": "/admin/app/subType",
+            "desc": "获取二级产品分类",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "Get address successfully.",
+                "data": [{"id":11, "name":"搞笑视频"},{"id":12, "name":"原创视频"}]
+            }
+        },
+
+        {
+            "url": "/admin/app/uploadAppFile",
+            "desc": "上传apk",
+            "mock": true,
+            "delay":2000,
+            "res": {
+                "code": 200,
+                "msg": "Get address successfully.",
+                "data": {
+                    "fileUrl": "http://lianaibiji.qiniudn.com/image_icon.png",
+                    "versionCode":12,
+                    "versionName": "V1.2.0",
+                    "size":10240
+                }
+            }
+        },
+
+        {
+            "url": "/admin/app/uploadImage",
+            "desc": "上传图片",
+            "mock": true,
+            "delay":2000,
+            "res": {
+                "code": 200,
+                "msg": "Get address successfully.",
+                "data": {"src":"http://image.coolapk.com/apk_image/2014/0830/12202_1409370078_2446.jpeg","w":0, "h":0}
+            }
+        },
+
+        {
+            "url": "/admin/comment/list",
+            "desc": "获取comments列表",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "Get comments successfully.",
+                "data": {
+                    "pageSize": 10,
+                    "pageNo": 2,
+                    "totalCount": 92,
+                    "items|1-5": [
+                        {
+                            "commentId|+1": 1,
+                            "subTypeId":"@pick(11,12)",
+                            "appName": "@cword(2,6)",
+                            "comment": "@cword(10,100)",
+                            "imageList|1-5":[{"src":"http://image.coolapk.com/apk_image/2014/0830/12202_1409370078_2446.jpeg","w":0,"h":0}],
+                            "userName": "@cname()",
+                            "versionName": "V@pick(1,2).@pick(1,10)",
+                            "type": "@pick('新闻阅读','视频','美食')",
+                            "status":"@pick('0','1','2','3')",
+                            "topFlag":"@pick(0,1)",
+                            "versionCode": "1.2.1",
+                            "commentTime": "@date('yyyy-MM-dd')"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "url": "/admin/statistic/statisticTotal",
+            "desc": "查看产品的所有统计结果",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK",
+                "data":{
+                    "totalApp": "29",
+                    "totalComment": "1201",
+                    "totalAccepted": "1100"
+                }
+
+            }
+        },
+        {
+            "url": "/admin/statistic/statisticDetail/list",
+            "desc": "查看产品明细统计信息",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK",
+                "data":{
+                    "totalCount": 30,
+                    "pageSize": 3,
+                    "pageNo": 2,
+                    "totalPage": 10,
+                    "items|1-5": [
+                        {
+                            "appId|+1": 1,
+                            "appName": "@cword(5,10)",
+                            "versionCode": "V1.2.1",
+                            "versionCount|1-5": "5",
+                            "type": "@pick('新闻阅读','视频','美食')",
+                            "createdTime": "@date('yyyy-MM-dd')",
+                            "currDownloadCount|1-5": "20",
+                            "currCommentCount|1-5": "24",
+                            "currAcceptedCount|1-5": "13",
+                            "downloadTotal|1-5": "20",
+                            "commentTotal|1-5": "20",
+                            "acceptedTotal|1-5": "20"
+                        }
+                    ]
+                }
+            }
+        },
+
+
+        {
+            "url": "/admin/statistic/deptInfo/list",
+            "desc": "部门管理员查看所有部门的一周内的详细统计情况",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK",
+                "data":{
+                    "totalCount": 30,
+                    "pageSize": 3,
+                    "pageNo": 1,
+                    "totalPage": 10,
+                    "items|1-5":[
+                        {
+                            "account":"xxxx@tcl.com",
+                            "name":"xxx",
+                            "totalComment|1-5": "20",
+                            "totalAccepted|1-5": "3"
+                        }
+                    ]
+                }
+            }
+        },
+
+
+        {
+            "url": "/admin/statistic/deptInfo/common",
+            "desc": "本部门或所有部门的一周内的评论统计情况",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK",
+                "data":
+                    {
+                        "userCount": "45",
+                        "commentUserCount": "41",
+                        "totalComment": "180",
+                        "acceptedCount": "91"
+                    }
+            }
+        },
+
+
+        {
+            "url": "/admin/statistic/deptInfo/export",
+            "desc": "本部门或所有部门的一周内的统计情况导出",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK"
+            }
+        },
+
+
+        {
+            "url": "/admin/statistic/honour/list",
+            "desc": "动态展示红黑榜信息",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK",
+                "data":{
+                    "type": "1",
+                    "items|1-5":[
+                        {
+                            "account":"xxxx@tcl.com",
+                            "name":"xxx",
+                            "totalComment|1-5": "20",
+                            "totalAccepted|1-5": "3",
+                            "status": "N"
+                        },
+                        {
+                            "account":"xxxx@tcl.com",
+                            "name":"xxx",
+                            "totalComment|1-5": "20",
+                            "totalAccepted|1-5": "3",
+                            "status": "N"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "url": "/admin/systemConfig/commentTarget",
+            "desc": "平台管理员点击系统设置,进行评论达标标准配置",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK"
+            }
+        },
+        {
+            "url": "/admin/systemConfig/dept",
+            "desc": "平台管理员获取一级或是二级部门列表",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK",
+                "data": [{"id":1, "name":"数据中心"},{"id":2, "name":"前端"},{"id":3, "name":"UI"}]
+            }
+        },
+
+        {
+            "url": "/admin/systemConfig/deleteDept",
+            "desc": "平台管理员在系统配置页面点击删除,进行一级部门删除,二级部门删除",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "OK"
+            }
+        },
+
+
+
+
+
+
+        {
+            "url": "/",
+            "desc": "Index",
+            "mock": true,
+            "res": {
+                "code": 200,
+                "msg": "Hi, this is mock server.",
+                "data": ""
+            }
+        }
+    ]
+}
+
+
+
+
+
+
