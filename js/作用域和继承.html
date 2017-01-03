@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+        // 继承的几种方法
+        $(function(){
+            // 1、继承第一种方式：对象冒充
+            // function Parent(username){
+            //     this.username = username;
+            //     this.hello = function(){
+            //       alert(this.username);
+            //     }
+            // };
+            // function Child(username,password){
+            //     第一步：this.method是作为一个临时的属性，并且指向Parent所指向的对象，
+            //     第二步：执行this.method方法，即执行Parent所指向的对象函数
+            //     第三步：销毁this.method属性，即此时Child就已经拥有了Parent的所有属性和方法
+            //     this.method=Parent;
+            //     this.method(username);
+            //     delete this.method;
+            //     this.password=password;
+            //     this.world=function(){
+            //         alert(this.password);
+            //     }
+            // };
+            // var parent=new Parent('lily');
+            // var child=new Child('tila','123456');
+            // parent.hello();
+            // child.hello();
+            // child.world();
+
+            
+            // 2、call（）方法
+                     // call方法是Function类中的方法
+                     //  call方法的第一个参数的值赋值给类(即方法)中出现的this
+                     //  call方法的第二个参数开始依次赋值给类(即方法)所接受的参数
+
+                  // function test(str){
+                  //   alert(this.name + " " + str);
+                  //   }
+                  // var object = new Object();
+                  // object.name = "zhangsan";
+                  // test.call(object,"langsin");
+
+
+                // function Parent(username){
+                //     this.username = username;
+                //     this.hello = function(){
+                //       alert(this.username);
+                //     }
+                // };
+                // function Child(username,password){
+
+                //     Parent.call(this,username);
+                //     this.password=password;
+                //     this.world=function(){
+                //         alert(this.password)
+
+                //     }
+                // }
+
+                // var parent=new Parent('lily');
+                // var child=new Child('tila','123456');
+                // parent.hello();
+                // child.hello();
+                // child.world();
+
+            // 3、apply（）方法
+
+                // apply方法接受2个参数，
+                // A、第一个参数与call方法的第一个参数一样，即赋值给类(即方法)中出现的this
+                // B、第二个参数为数组类型，这个数组中的每个元素依次赋值给类(即方法)所接受的参数
+
+                // function Parent(username){
+                //     this.username = username;
+                //     this.hello = function(){
+                //       alert(this.username);
+                //     }
+                // };
+                // function Child(username,password){
+
+                //     Parent.apply(this,new Array(username));
+                //     this.password=password;
+                //     this.world=function(){
+                //         alert(this.password)
+
+                //     }
+                // }
+
+                // var parent=new Parent('lily');
+                // var child=new Child('tila','123456');
+                // parent.hello();
+                // child.hello();
+                // child.world();
+
+
+            // 4、原型链的方法
+
+                // function Person(){  
+                //    this.name="Tom";  
+                //    this.age=10;  
+                // }  
+  
+                // Person.prototype.sayName=function(){  
+                //        return this.name;  
+                // }  
+  
+                // function Child(){} ;
+
+                // Child.prototype=new Person();
+                
+                // //用对象字面量添加新方法，会导致上面一行代码无效 ,给子类的原型添加方法必须在上面一行代码的下面 
+                //     // Child.prototype={  
+                //     //        sayAge:fucntion(){  
+                //     //           alert(this.age);  
+                //     //        }  
+                //     // };  
+
+
+                // Child.prototype.sayAge=function(){  
+                //        return this.age;  
+                // }  
+                // var p1=new Child();
+                // alert(p1.sayAge());  //10  
+                // alert(p1.sayName()); //Tom  
+                // alert(Child.prototype.constructor==Child);  //false  
+                // alert(Child.prototype.constructor==Person); //true  
+                // alert(p1.constructor==Child); //false  
+                // alert(p1.constructor==Person); //true
+
+                // // 缺点：
+
+                // //     用原型链来实现继承会存在一些问题。这个问题主要是由于：原型中的属性是被所有实例所共享的。假如包含了引用类型值的原型，那么就会导致一些我们不希望看到的现象：
+
+                // //定义一个人的类  
+                //     function Person(){  
+                //         this.friends=["Lily"];  
+                //     }  
+                      
+                //     //定义一个小孩的类，暂时不拥有属性和方法  
+                //     function Child(){}  
+                      
+                //     //设置Child类的原型为Person的实例  
+                //     Child.prototype=new Person();  
+                      
+                //     //创建Child的实例  
+                //     var p1=new Child();  
+                //     var p2=new Child();  
+                      
+                //     alert(p1.friends); //Lily  
+                //     alert(p2.friends); //Lily  
+                      
+                //     p1.friends.push("Sam");  
+                      
+                //     alert(p1.friends); //Lily,Sam  
+                //     alert(p2.friends); //Lily,Sam 
+
+
+        // 5、组合继承：混合了call方式、原型链方式,也就是通过call方法继承父类的属性，原型方法继承父类的方法，这样就不会改变父类的属性，导致父类的其他的实例对象发生改变。
+
+                function Person(username){
+                    this.username=username;
+                }
+                Person.prototype.sayName=function(){
+                    alert(this.username)
+                };
+
+                function Child(username,age){
+                    Person.call(this,username);
+                    this.age=age;
+                }
+                Child.prototype=new Person();
+                Child.prototype.sayAge=function(){
+                    alert(this.age)
+                }
+
+                var c = new Child("zhangsan","lisi");
+                c.sayName();
+                c.sayAge();
+
+
+
+
+        })
+        
+    </script>
+</head>
+<body>
+	<div class="clearfix" style="height: 200px">
+		<div class="child" style="float: left;height: 100px;">heihei</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div class="one"  style="height: 200px;background-color: blue">
+		<div class="one-child" style="position: relative;top: 10px;left: 20px">heiheihei</div>
+		<div>hahha</div>
+	</div>
+	<div class="two" style="height: 200px;background-color: red;">
+		<div class="two-child" style="position: absolute;top: 100px;left: 100px">heiheiheia</div>
+	</div>
+	<input type="button" class="butt" >
+	 
+    <script type="text/javascript">
+    	// var c=7;
+    	// $('.butt').click(function(){
+
+    	// 	var c=3;
+    	// 	function b(){
+    	// 		var c=4;
+    	// 		console.log(this.c)
+    	// 	}
+    	// 	b();
+    	// })   
+      
+    	// js的作用域：
+    	//   1、全局变量：
+    	//       1.1:在函数体外定义的变量
+    	//       1.2：在函数体内没有用var定义的变量
+
+    	//   2、局部变量：
+    	//       2.1：在函数体里面定义的变量
+    	//       2.2：函数的参数变量
+    	//   3、优先级：
+    	//       3.1：局部变量高于同名的全局变量
+    	//       3.2：参数变量高于同名的全局变量
+    	//       3.3：局部变量高于同名的参数变量
+    	//   4、特性：
+    	//       全局变量是全局对象的属性
+    	//       局部变量是调用对象的属性
+    	//       4.1：作用域链
+    	//           内层函数可以访问外层函数的局部变量
+    	//           外层函数不能访问内存函数的局部变量
+    	//       4.2：生命周期
+    	//            全局变量：除非被显示删除，不然一直存在
+    	//            局部变量：自声明起到函数运行完毕，或是被显示的删除
+
+
+
+    	           
+
+
+
+    </script>
+
+</body>
+</html>
